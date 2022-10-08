@@ -1,0 +1,124 @@
+:root {
+    --color: #966F33;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    background-color: var(--color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.box {
+    width: 500px;
+    height: 500px;
+    display: grid;
+    box-shadow: 0 0 12px 8px rgba(0, 0, 0, 0.3);
+    /* transform: rotateX(45deg); */
+    grid-template-columns: repeat(3, 1fr);
+    border-radius: 12px;
+    gap: 4px;
+    background: white;
+    overflow: hidden;
+}
+
+.checkbox {
+    border: 0;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: transparent;
+    background: var(--color);
+}
+
+.player1 span {
+    position: absolute;
+    border-radius: 20px;
+    background-color: white;
+    width: 80%;
+    height: 12px;
+}
+
+.player1 span#satu {
+    transform: rotate(-45deg) translate(-250px);
+    animation: satu 0.5s forwards;
+}
+
+.player1 span#dua {
+    transform: rotate(45deg) translate(250px);
+    animation: dua 0.5s forwards;
+}
+
+.player2 span {
+    width: 80%;
+    height: 80%;
+    transform: scale(0,0);
+    animation: circle 0.5s forwards;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 10px solid white;
+    position: absolute;
+}
+
+#overlay {
+    width: 100%;
+    min-height: 100vh;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+}
+
+#overlay #winner {
+    color: white;
+    margin-bottom: 48px;
+}
+
+#overlay #retry {
+    cursor: pointer;
+    border-radius: 4px;
+    color: white;
+    background-color: var(--color);
+    padding: 6px 30px;
+    font-size: 2rem;
+    border: 0;
+}
+
+@keyframes satu {
+    100% {
+        transform: rotate(-45deg) translate(0);
+    }
+}
+
+@keyframes dua {
+    100% {
+        transform: rotate(45deg) translate(0);
+    }
+}
+
+@keyframes circle {
+    100% {
+        transform: scale(1,1);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .box {
+        width: 100%;
+        height: calc(100vh - 50vh);
+    }
+}
