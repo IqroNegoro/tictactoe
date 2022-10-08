@@ -1,5 +1,13 @@
 class Tictactoe {
-    constructor(box) {
+    constructor(playerOneName, playerTwoName) {
+        this.multiplayer = false;
+        if (playerOneName && playerTwoName) {
+            this.multiplayer = true;
+            this.playerOneName = playerOneName;
+            this.scorePlayerOne = 0;
+            this.playerTwoName = playerTwoName
+            this.scorePlayerTwo = 0;
+        }
         this.player = 1;
         this.next = false;
         this.tictactoe = [
@@ -8,14 +16,19 @@ class Tictactoe {
             [0, 0, 0]
         ];
         
-        box.forEach(v => {
+        this.box = Array.from(document.getElementsByClassName("checkbox"));
+
+        this.box.forEach(v => {
             v.addEventListener("click", this.click, true);
         })
         
         document.getElementById("retry").addEventListener("click", this.refresh);
 
         this.winner = true;
-        this.box = box;
+    }
+
+    bot() {
+        
     }
 
     refresh() {
@@ -37,7 +50,8 @@ class Tictactoe {
     end(winner) {
         if (winner) {
             document.getElementsByClassName("overlay")[0].style.display = "flex";
-            document.getElementById("winner").textContent = `Player ${this.player} Winner!`;
+            document.getElementById("winner").textContent = `Player ${(this.multiplayer ? this.player == 1 ? this.playerOneName : this.playerTwoName : "") } Win The Game!`;
+            this.multiplayer ? this.player == 1 ? this.scorePlayerOne++ : this.scorePlayerTwo++ : "";
         } else {
             document.getElementsByClassName("overlay")[0].style.display = "flex";
             document.getElementById("winner").textContent = `Draw!`;
@@ -168,7 +182,6 @@ class Tictactoe {
     click = box => {
         if (box.target.classList.contains("checkbox")) {
             this.check(box.target.value);
-            
             if (this.next) {
                 if (this.player == 1) {
                 box.target.classList.add("player1")
@@ -178,27 +191,18 @@ class Tictactoe {
                 box.target.classList.add("player2")
                 box.target.innerHTML = `<span></span>`
                 this.player = 1;
+                }
             }
         }
     }
-    }
 }
 
-class PlayerSatu extends Tictactoe {
-    constructor(box, name) {
-        super(box);
-        this.name = name;
+let game = (state = true) => {
+    if (state) {
+        new Tictactoe();
+    } else {
+        new Tictactoe("Iqro Negoro", "Nadila Vira");
     }
-}
-
-class PlayerDua extends Tictactoe {
-    constructor(box, name) {
-        super(box)
-    }
-}
-
-let game = () => {
-    new Tictactoe(Array.from(document.getElementsByClassName("checkbox")));
 }
 
 game();
