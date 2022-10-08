@@ -45,6 +45,7 @@ class Tictactoe {
     }
 
     win = player => {
+        console.log("awal", this.winner)
         //horizontal check;
         for (let i = 0; i < this.tictactoe.length; i++) {
             for (let j = 0; j < this.tictactoe[i].length; j++) {
@@ -62,6 +63,8 @@ class Tictactoe {
                 break;
             }
         }
+
+        console.log("horizontal", this.winner)
 
         //vertical check
         if (!this.winner) {
@@ -82,6 +85,9 @@ class Tictactoe {
             }
         }
     }
+
+    console.log("vertical", this.winner)
+
         //diagonal checking
         if (!this.winner) {
             for (let i = 0; i < this.tictactoe.length; i++) {
@@ -96,6 +102,8 @@ class Tictactoe {
                 }
             }
         }
+
+        console.log("diagonal kiri", this.winner)
 
         //diagonal checking
         if (!this.winner) {
@@ -112,25 +120,33 @@ class Tictactoe {
             }
         }
 
+        console.log("diagonal kanan", this.winner)
+        console.log(this.tictactoe)
         //checking draw
         if (!this.winner) {
+            this.winner = true;
             for (let i = 0; i < this.tictactoe.length; i++) {
                 for (let j = 0; j < this.tictactoe[i].length; j++) {
                     if (this.tictactoe[i][j] == 0) {
                         this.winner = false;
                         break;
                     }
-                    if (i == 2 && j == 2 && !this.winner) {
-                        this.end(this.winner)
+                    if (i == 2 && j == 2) {
+                        this.end(!this.winner)
                         return;
                     }
                 }
+                if (!this.winner) break;
             }
         }
+
+        console.log("draw", this.winner)
 
         if (this.winner) {
             this.end(this.winner);
         }
+        console.log("akhir", this.winner)
+
     }
 
     check = i => {
@@ -179,7 +195,19 @@ class Tictactoe {
         }
     }
     }
-    
+}
+
+class PlayerSatu extends Tictactoe {
+    constructor(box, name) {
+        super(box);
+        this.name = name;
+    }
+}
+
+class PlayerDua extends Tictactoe {
+    constructor(box, name) {
+        super(box)
+    }
 }
 
 let game = () => {
