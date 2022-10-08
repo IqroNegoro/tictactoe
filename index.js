@@ -1,7 +1,6 @@
 class Tictactoe {
     constructor(box) {
         this.player = 1;
-        this.count = 0;
         this.next = false;
         this.tictactoe = [
             [0, 0, 0],
@@ -20,7 +19,7 @@ class Tictactoe {
     }
 
     refresh() {
-        document.getElementById("overlay").style.display = "none";
+        document.getElementsByClassName("overlay")[0].style.display = "none";
         document.getElementsByClassName("box")[0].innerHTML = `
         <button class="checkbox" value="1"></button>     
         <button class="checkbox" value="2"></button>     
@@ -37,10 +36,10 @@ class Tictactoe {
 
     end(winner) {
         if (winner) {
-            document.getElementById("overlay").style.display = "flex";
+            document.getElementsByClassName("overlay")[0].style.display = "flex";
             document.getElementById("winner").textContent = `Player ${this.player} Winner!`;
         } else {
-            document.getElementById("overlay").style.display = "flex";
+            document.getElementsByClassName("overlay")[0].style.display = "flex";
             document.getElementById("winner").textContent = `Draw!`;
         }
     }
@@ -113,6 +112,22 @@ class Tictactoe {
             }
         }
 
+        //checking draw
+        if (!this.winner) {
+            for (let i = 0; i < this.tictactoe.length; i++) {
+                for (let j = 0; j < this.tictactoe[i].length; j++) {
+                    if (this.tictactoe[i][j] == 0) {
+                        this.winner = false;
+                        break;
+                    }
+                    if (i == 2 && j == 2 && !this.winner) {
+                        this.end(this.winner)
+                        return;
+                    }
+                }
+            }
+        }
+
         if (this.winner) {
             this.end(this.winner);
         }
@@ -149,12 +164,6 @@ class Tictactoe {
 
     click = box => {
         if (box.target.classList.contains("checkbox")) {
-            this.count += 1;
-            console.log(this.count)
-            if (this.count == 9) {
-                this.end(this.winner);
-            }
-
             this.check(box.target.value);
             
             if (this.next) {

@@ -13,6 +13,8 @@
     min-height: 100vh;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     overflow: hidden;
 }
@@ -70,7 +72,7 @@
     position: absolute;
 }
 
-#overlay {
+.overlay {
     width: 100%;
     min-height: 100vh;
     display: none;
@@ -81,14 +83,20 @@
     flex-direction: column;
     align-items: center;
     background-color: rgba(0,0,0,0.5);
+    z-index: 999;
 }
 
-#overlay #winner {
+.overlay.first {
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.overlay #winner {
     color: white;
     margin-bottom: 48px;
 }
 
-#overlay #retry {
+.overlay #retry, #alone, #multiplayer {
     cursor: pointer;
     border-radius: 4px;
     color: white;
@@ -97,6 +105,7 @@
     font-size: 2rem;
     border: 0;
 }
+
 
 @keyframes satu {
     100% {
