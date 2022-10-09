@@ -1,8 +1,6 @@
 class Tictactoe {
     constructor(playerOneName, playerTwoName) {
-        this.multiplayer = false;
         if (playerOneName && playerTwoName) {
-            this.multiplayer = true;
             this.playerOneName = playerOneName;
             this.playerTwoName = playerTwoName
         }
@@ -27,33 +25,6 @@ class Tictactoe {
         document.getElementsByClassName("setup")[0].style.display = "none";
     }
 
-    bot = () => {
-        let arr = [];
-        for (let i = 0; i < this.tictactoe.length; i++) {
-            for (let j = 0; j < this.tictactoe[i].length; j++) {
-                if (i == 0) {
-                    arr.push([i, j])
-                }
-
-                if (i == 1) {
-                    arr.push([i, j + 4])
-                }
-
-                if (i == 2) {
-                    arr.push([i, j + 7])
-                }
-            }
-        }
-        let randomArr = Math.floor(Math.random() * 2);
-        let randomNestArr = Math.floor(Math.random() * 2);
-        console.log(arr)
-        console.log(randomArr, randomNestArr)
-        console.log(arr[randomArr], arr[randomArr][randomNestArr])
-        // while (this.check(arr[randomArr, randomNestArr])) {
-
-        // }
-    }
-
     refresh = () => {
         document.getElementsByClassName("overlay")[0].style.display = "none";
         document.getElementsByClassName("box")[0].innerHTML = `
@@ -67,13 +38,13 @@ class Tictactoe {
         <button class="checkbox" value="8"></button>     
         <button class="checkbox" value="9"></button>  
         `
-        game("", this.multiplayer ? "multiplayer" : "solo");
+        game();
     }
 
     end(winner) {
         if (winner) {
             document.getElementsByClassName("overlay")[0].style.display = "flex";
-            document.getElementById("winner").textContent = `Player ${(this.multiplayer ? this.player == 1 ? this.playerOneName : this.playerTwoName : "Bot") } Win The Game!`;
+            document.getElementById("winner").textContent = `Player ${(this.player == 1 ? this.playerOneName : this.playerTwoName) } Win The Game!`;
         } else {
             document.getElementsByClassName("overlay")[0].style.display = "flex";
             document.getElementById("winner").textContent = `Draw!`;
@@ -170,8 +141,6 @@ class Tictactoe {
         if (this.winner) {
             this.end(this.winner);
         }
-
-        return false;
     }
 
     check = i => {
@@ -207,7 +176,6 @@ class Tictactoe {
         if (box.target.classList.contains("checkbox")) {
             this.check(box.target.value);
             if (this.next) {
-                if (this.multiplayer) {
                     if (this.player == 1) {
                         box.target.classList.add("player1")
                         box.target.innerHTML = `<span id="satu"></span><span id="dua"></span>`
@@ -217,20 +185,12 @@ class Tictactoe {
                         box.target.innerHTML = `<span></span>`
                         this.player = 1;
                     }
-                } else {
-                    if (this.player == 1) {
-                        box.target.classList.add("player1")
-                        box.target.innerHTML = `<span id="satu"></span><span id="dua"></span>`
-                        this.player = 2;
-                    }
                 }
             }
         }
     }
-}
 
-let game = (e, state = "solo") => {
-    if (state == "multiplayer") {
+let game = e => {
         let playerOneName = document.getElementById("player1").value;
         let playerTwoName = document.getElementById("player2").value;
         if (!playerOneName || !playerTwoName) {
@@ -238,15 +198,8 @@ let game = (e, state = "solo") => {
             return false;
         }
         new Tictactoe(playerOneName, playerTwoName);
-    } else {
-        new Tictactoe();
-    }
 }
 
 document.getElementById("multiplayer").addEventListener("click", function(e) {
-    game(e, this.value)
-})
-
-document.getElementById("solo").addEventListener("click", function(e) {
-    game(e, this.value)
+    game()
 })
